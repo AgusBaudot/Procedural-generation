@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07e16bc5d8b295a428ed8d9b82d00a6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MapSize: {x: 12, y: 12}
+  MapSize: {x: 20, y: 20}
   Tilemap: {fileID: 1614088005}
   Tiles:
   - {fileID: 11400000, guid: 0bb738c6e43979843a5aaed66904cb67, type: 2}
@@ -220,6 +220,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2aa713ddd73afdb42a43a975d0271771, type: 2}
   - {fileID: 11400000, guid: b21d5901b10a97d49835030a6cd377a8, type: 2}
   - {fileID: 11400000, guid: 0f312172f34a4534ba1391be1caebb47, type: 2}
+  MaxAttempts: 75
+  WidthRange: {x: 4, y: 8}
+  HeightRange: {x: 4, y: 8}
+  Padding: 1
 --- !u!1 &1614088002
 GameObject:
   m_ObjectHideFlags: 0
