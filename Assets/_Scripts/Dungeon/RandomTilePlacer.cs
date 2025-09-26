@@ -17,6 +17,8 @@ public class RandomTilePlacer : MonoBehaviour
     
     public List<Room> Rooms;
 
+    private RectInt _actualMap;
+
     private void Awake()
     {
         Setup();
@@ -29,11 +31,16 @@ public class RandomTilePlacer : MonoBehaviour
 
     private void Setup()
     {
+        _actualMap = new RectInt(
+            new Vector2Int (-MapSize.x / 2, -MapSize.y / 2),
+            MapSize
+            );
+
         // IGenerator generator = new PerlinNoiseGenerator(Random.Range(1, 101));
         // generator.Generate(Tilemap, MapSize, Tiles);
         
         //Generate rooms:
-        RoomGenerator roomGenerator = new RoomGenerator(MapSize, MaxAttempts, WidthRange, HeightRange);
+        RoomGenerator roomGenerator = new RoomGenerator(_actualMap, MaxAttempts, WidthRange, HeightRange, Random.Range(0, 1000));
         Rooms = roomGenerator.GenerateRooms(Padding);
         //Generate room filler to see them.
         IGenerator generator = new RandomTileGenerator(Random.Range(1, 101));

@@ -1,23 +1,27 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
+using Random = System.Random;
 
 public class RoomGenerator
 {
     private Vector2Int _widthRange;
     private Vector2Int _heightRange;
-    private Vector2Int _mapSize;
+    private RectInt _mapSize;
     private int _maxAttempts;
+    private int _seed;
+    private Random _rnd;
     // private IGenerator _generator;
     private List<Room> _rooms = new List<Room>();
 
-    public RoomGenerator (/*IGenerator generator, */Vector2Int size, int maxAttempts, Vector2Int widthRange, Vector2Int heightRange)
+    public RoomGenerator (/*IGenerator generator, */RectInt size, int maxAttempts, Vector2Int widthRange, Vector2Int heightRange, int seed)
     {
         // _generator = generator;
         _mapSize = size;
         _maxAttempts = maxAttempts;
         _widthRange = widthRange;
         _heightRange = heightRange;
+        _seed = seed;
+        _rnd = new Random(seed);
     }
 
     public List<Room> GenerateRooms(int padding = 0)
@@ -28,11 +32,17 @@ public class RoomGenerator
         for (int i = 0; i < _maxAttempts; i++)
         {
             //Generate random point and size of room.
-            rndPosition = new Vector2Int(Random.Range(0, _mapSize.x), Random.Range(0, _mapSize.y));
-            rndSize = new Vector2Int(Random.Range(_widthRange.x, _widthRange.y),  Random.Range(_heightRange.x, _heightRange.y));
+            rndPosition = new Vector2Int(_rnd.Next(_mapSize.xMin, _mapSize.xMax), _rnd.Next(_mapSize.yMin, _mapSize.yMax));
+            rndSize = new Vector2Int(_rnd.Next(_widthRange.x, _widthRange.y),  _rnd.Next(_heightRange.x, _heightRange.y));
             isValid = true;
 
-            if (rndPosition.x + rndSize.x >= _mapSize.x || rndPosition.y + rndSize.y >= _mapSize.y)
+            if (rndPosition.x + rndSize.x >= _mapSize.xMax || rndPosition.y + rndSize.y >= _mapSize.yMax)
+            if (
+                    rndPosition.x + rndSize.x >= _mapSize.xMax ||
+                    rndPosition.y + rndSize.y >= _mapSize.yMax ||
+                    rndPosition.x <= _mapSize.xMin ||
+                    rndPosition.y <= _mapSize.yMin
+                    )
             {
                 continue;
             }
